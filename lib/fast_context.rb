@@ -34,6 +34,7 @@ module Shoulda
     end
 
     def create_test_from_should_hash
+      return if self.shoulds.length.zero?
       test_name = test_method_name
 
       if test_unit_class.instance_methods.include?(test_name.to_s)
