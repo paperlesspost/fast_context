@@ -1,5 +1,7 @@
 require 'shoulda/context'
 
+
+
 module ShouldaContextExtensions
   def fast_context(name, &blk)
     @fast_subcontexts ||= []
@@ -46,8 +48,8 @@ module Shoulda
           context.run_current_setup_blocks(self)
 
           context.shoulds.each {|should| should[:block].bind(self).call }
-        rescue Test::Unit::AssertionFailedError => e
-          error = Test::Unit::AssertionFailedError.new(["FAILED:", context.full_name, "should", "#{@current_should[:name]}:", e.message].flatten.join(' '))
+        rescue ActiveSupport::TestCase::Assertion => e
+          error = ActiveSupport::TestCase::Assertion.new(["FAILED:", context.full_name, "should", "#{@current_should[:name]}:", e.message].flatten.join(' '))
           error.set_backtrace e.backtrace
           raise error
         ensure
